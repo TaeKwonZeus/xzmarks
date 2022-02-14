@@ -8,6 +8,5 @@ public class Bookmarks : PageModel
 {
     public void OnGet()
     {
-        
     }
 }
