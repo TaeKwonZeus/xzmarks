@@ -1,15 +1,31 @@
+using AspNet.Security.OAuth.Discord;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using XZMarks.Services.Database;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = DiscordAuthenticationDefaults.AuthenticationScheme;
+    })
+    .AddDiscord(options =>
+    {
+        var authenticationSettings = builder.Configuration.GetSection("Authentication");
+        options.ClientId = authenticationSettings["ClientId"];
+        options.ClientSecret = authenticationSettings["ClientSecret"];
+    })
+    .AddCookie();
+
+builder.Services.AddScoped<IDbService, DbService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -18,6 +34,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
