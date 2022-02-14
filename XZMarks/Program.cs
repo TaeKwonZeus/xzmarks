@@ -1,5 +1,6 @@
 using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using XZMarks.Services.Bookmarks;
 using XZMarks.Services.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Services.AddAuthentication(options =>
     .AddCookie();
 
 builder.Services.AddScoped<IDbService, DbService>();
+builder.Services.AddScoped<IBookmarkService, BookmarkService>();
 
 var app = builder.Build();
 
