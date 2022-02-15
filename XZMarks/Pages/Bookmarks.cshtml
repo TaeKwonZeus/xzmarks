@@ -1,5 +1,8 @@
 @page
+@using XZMarks.Services.Bookmarks
+@using System.Security.Claims
 @model XZMarks.Pages.Bookmarks
+@inject IBookmarkService _bookmarkService
 
 @{
     ViewData["Title"] = "Bookmarks";
@@ -30,3 +33,11 @@
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
 <h3>My Bookmarks</h3>
+@{
+    var bookmarks = await _bookmarkService.GetAllBookmarks(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+    @foreach(var bookmark in bookmarks)
+    {
+        <h5>@bookmark.ToString()</h5>
+    }
+}

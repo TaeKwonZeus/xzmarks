@@ -21,8 +21,7 @@ public class Bookmarks : PageModel
         _logger = logger;
     }
 
-    [BindProperty]
-    public Bookmark FormValue { get; set; }
+    [BindProperty] public Bookmark FormValue { get; set; } = new();
 
     public async Task<IActionResult> OnPostAsync()
     {
@@ -35,7 +34,8 @@ public class Bookmarks : PageModel
         {
             await _bookmarkService.CreateBookmark(id, coordinates);
 
-            return Page();
+            ModelState.Clear();
+            return Redirect("/Bookmarks");
         }
         catch (DbException e)
         {

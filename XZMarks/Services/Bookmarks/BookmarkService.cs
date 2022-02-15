@@ -27,4 +27,31 @@ public class BookmarkService : IBookmarkService
             coordinates.Name
         });
     }
+
+    public async Task<IEnumerable<Coordinates>> GetAllBookmarks(string id)
+    {
+        await using var connection = _dbService.GetConnection();
+
+        var records = await connection.QueryAsync<BookmarkRecord>(@"SELECT x, y, z, name
+            FROM bookmarks
+            WHERE discord_id = @DiscordId;", new
+        {
+            DiscordId = id
+        });
+
+        return records.Select(r => new Coordinates(r.Name, r.X, r.Z, r.Y));
+    }
+
+    private record BookmarkRecord
+    {
+        public int X { get; set; }
+
+        public int? Y { get; set; }
+
+        public int Z { get; set; }
+
+        public string DiscordId { get; set; }
+
+        public string Name { get; set; }
+    }
 }
