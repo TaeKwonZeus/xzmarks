@@ -8,28 +8,25 @@
 <h1>Bookmarks</h1>
 <p>Here are your bookmarks :D</p>
 <h3>Create a Bookmark</h3>
-<form method="post">
+<form method="post" class="mb-3">
     <div class="mb-3">       
         <label for="name">Name</label>
-        <input id="name" class="form-control" type="text" required/>
-    </div>
-    <div class="mb-3">
-        <label for="description">Description (Optional)</label>
-        <textarea id="description" class="form-control" rows="2"></textarea>
+        <input asp-for="FormValue.Name" id="name" class="form-control" type="text" required/>
     </div>
     <div class="row mb-3">
         <div class="col">
             <label for="x">X</label>
-            <input id="x" class="form-control" type="number" required/>
+            <input asp-for="FormValue.X" id="x" class="form-control" type="number" required/>
         </div>
         <div class="col">
             <label for="y">Y (Optional)</label>
-            <input id="y" class="form-control" type="number" min="-64" max="320"/>
+            <input asp-for="FormValue.Y" id="y" class="form-control" type="number" min="-64" max="320"/>
         </div>
         <div class="col">
             <label for="z">Z</label>
-            <input id="z" class="form-control" type="number" required/>
+            <input asp-for="FormValue.Z" id="z" class="form-control" type="number" required/>
         </div>
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
+<h3>My Bookmarks</h3>

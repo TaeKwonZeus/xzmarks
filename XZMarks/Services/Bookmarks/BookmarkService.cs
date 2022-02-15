@@ -17,15 +17,14 @@ public class BookmarkService : IBookmarkService
     {
         await using var connection = _dbService.GetConnection();
 
-        await connection.ExecuteAsync(@"INSERT INTO bookmarks (x, y, z, discord_id, name, description)
-            VALUES (@X, @Y, @Z, @DiscordId, @Name, @Description);", new
+        await connection.ExecuteAsync(@"INSERT INTO bookmarks (x, y, z, discord_id, name)
+            VALUES (@X, @Y, @Z, @DiscordId, @Name);", new
         {
             coordinates.X,
             coordinates.Y,
             coordinates.Z,
             DiscordId = id,
-            coordinates.Name,
-            coordinates.Description
+            coordinates.Name
         });
     }
 }
