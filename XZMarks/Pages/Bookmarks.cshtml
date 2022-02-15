@@ -12,7 +12,7 @@
 <p>Here are your bookmarks :D</p>
 <h3>Create a Bookmark</h3>
 <form method="post" class="mb-3">
-    <div class="mb-3">       
+    <div class="mb-3">
         <label for="name">Name</label>
         <input asp-for="FormValue.Name" id="name" class="form-control" type="text" required/>
     </div>
@@ -33,11 +33,7 @@
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
 <h3>My Bookmarks</h3>
-@{
-    var bookmarks = await _bookmarkService.GetAllBookmarks(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-    @foreach(var bookmark in bookmarks)
-    {
-        <h5>@bookmark.ToString()</h5>
-    }
+@foreach (var bookmark in await _bookmarkService.GetAllBookmarks(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+{
+    <h5>@bookmark.ToString()</h5>
 }
